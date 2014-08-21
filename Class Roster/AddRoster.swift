@@ -10,7 +10,6 @@ import UIKit
 
 class AddRoster: UIViewController, UITextFieldDelegate {
 
-    // var addPerson : Person?
     var addPerson = [["firstName" : ""], ["lastName" : ""]]
     
     @IBOutlet weak var firstNameTxtField: UITextField!
@@ -18,7 +17,6 @@ class AddRoster: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
 

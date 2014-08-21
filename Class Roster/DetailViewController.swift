@@ -16,31 +16,39 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var imageView: UIImageView!
     
     var selectedPerson : Person?
+    var defaultProfileImage = UIImage(named: "default.jpg")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 //        let imageTap = UITapGestureRecognizer(target: self, action: NSSelectorFromString("imageTouched"))
 //        self.imageView.addGestureRecognizer(imageTap)
-        var defaultProfileImage = UIImage(named: "default.jpg")
-        self.imageView.image = defaultProfileImage
-    }
+        self.imageView.layer.cornerRadius = self.imageView.frame.size.width / 2
+        self.imageView.clipsToBounds = true
+        self.imageView.layer.borderWidth = 3.0
+        // self.imageView.layer.borderColor : UIColor = UIColor.whiteColor()
+        // self.imageView.layer.borderColor = [UIColor whiteColor].CGColor;
+        // self.imageView.layer.borderColor = UIColor.whiteColor()
+        // self.imageView.layer.masksToBounds = true
+        }
     
     override func viewWillAppear(animated: Bool) {
         // super.viewWillAppear(true)
         self.fullNameLbl.text = selectedPerson!.fullName()
         self.firstNameTxtField.text = selectedPerson!.firstName
         self.lastNameTxtField.text = selectedPerson!.lastName
+        
+        
+        if self.selectedPerson!.profileImage != nil {
+            self.imageView.image = self.selectedPerson!.profileImage
+        } else {
+            self.imageView.image = defaultProfileImage
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         self.selectedPerson?.firstName = self.firstNameTxtField.text
         self.selectedPerson?.lastName = self.lastNameTxtField.text
-        
-        if self.selectedPerson?.profileImage {
-            self.imageView.image = self.selectedPerson?.profileImage
-        }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,20 +69,13 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         picker.dismissViewControllerAnimated(true, completion: nil)
         var editedImage = info[UIImagePickerControllerOriginalImage] as UIImage
         self.imageView.image = editedImage
-        self.selectedPerson?.profileImage = editedImage
+        self.selectedPerson!.profileImage = editedImage
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
    
-//    let profileImage = info[UIImagePickerControllerOriginalImage] as UIImage
-//    self.imageView.image = profileImage
-//    self.selectedPerson.image = profileImage
-//    self.selectedPerson.hasImage = true
-//    self.saveImageToDocumentsDirectory(originalImage)
-//    self.dismissViewControllerAnimated(true, completion: nil)
-//    }
     /*
     // MARK: - Navigation
 
