@@ -1,8 +1,8 @@
 //
 //  DetailViewController.swift
-//  Class Roster Part 3
+//  Class Roster Part 4
 //
-//  Created by Kevin Pham on 8/14/14.
+//  Created by Kevin Pham on 8/18/14.
 //  Copyright (c) 2014 Kevin Pham. All rights reserved.
 //
 
@@ -20,6 +20,10 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        let imageTap = UITapGestureRecognizer(target: self, action: NSSelectorFromString("imageTouched"))
+//        self.imageView.addGestureRecognizer(imageTap)
+        var defaultProfileImage = UIImage(named: "default.jpg")
+        self.imageView.image = defaultProfileImage
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -27,13 +31,15 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         self.fullNameLbl.text = selectedPerson!.fullName()
         self.firstNameTxtField.text = selectedPerson!.firstName
         self.lastNameTxtField.text = selectedPerson!.lastName
-        
-        self.imageView.image = UIImage(named: "default.jpg")
     }
     
     override func viewWillDisappear(animated: Bool) {
         self.selectedPerson?.firstName = self.firstNameTxtField.text
         self.selectedPerson?.lastName = self.lastNameTxtField.text
+        
+        if self.selectedPerson?.profileImage {
+            self.imageView.image = self.selectedPerson?.profileImage
+        }
         
     }
 
@@ -42,14 +48,33 @@ class DetailViewController: UIViewController, UITextFieldDelegate, UINavigationC
         // Dispose of any resources that can be recreated.
     }
     
-//    func imageTouched() {
-//        var imagePicker = UIImagePickerController()
-//        imagePicker.delegate = self
-//        imagePicker.allowsEditing = true
-//        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-//        self.presentViewController(imagePicker, animated: true, completion: nil)
-//    }
+    @IBAction func photoButton(sender: UIButton) {
+        var imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        // imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
+        self.presentViewController(imagePickerController, animated: true, completion: nil)
+    }
     
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]!) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+        var editedImage = info[UIImagePickerControllerOriginalImage] as UIImage
+        self.imageView.image = editedImage
+        self.selectedPerson?.profileImage = editedImage
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController!) {
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+   
+//    let profileImage = info[UIImagePickerControllerOriginalImage] as UIImage
+//    self.imageView.image = profileImage
+//    self.selectedPerson.image = profileImage
+//    self.selectedPerson.hasImage = true
+//    self.saveImageToDocumentsDirectory(originalImage)
+//    self.dismissViewControllerAnimated(true, completion: nil)
+//    }
     /*
     // MARK: - Navigation
 

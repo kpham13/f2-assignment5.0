@@ -1,8 +1,8 @@
 //
 //  Person.swift
-//  Class Roster Part 3
+//  Class Roster Part 4
 //
-//  Created by Kevin Pham on 8/14/14.
+//  Created by Kevin Pham on 8/18/14.
 //  Copyright (c) 2014 Kevin Pham. All rights reserved.
 //
 

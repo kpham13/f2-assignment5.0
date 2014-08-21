@@ -1,8 +1,8 @@
 //
 //  ViewController.swift
-//  Class Roster Part 3
+//  Class Roster Part 4
 //
-//  Created by Kevin Pham on 8/14/14.
+//  Created by Kevin Pham on 8/18/14.
 //  Copyright (c) 2014 Kevin Pham. All rights reserved.
 //
 
@@ -22,12 +22,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // Do any additional setup after loading the view, typically from a nib.
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        teacherArray(teacherInfo)
-        studentArray(studentInfo)
+        self.teacherArray(teacherInfo)
+        self.studentArray(studentInfo)
     }
     
     override func viewWillAppear(animated: Bool) {
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -56,7 +56,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            return self.teachers.count
         default:
             return self.students.count
         }
@@ -71,6 +71,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
     }
     
+    //
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
         
@@ -82,6 +83,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             personForRow = self.students[indexPath.row]
         }
         cell.textLabel.text = personForRow.fullName()
+        cell.imageView.image = UIImage(named: "default.jpg")
         
         return cell
     }
@@ -115,5 +117,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBAction func cancelButton(segue: UIStoryboardSegue) {
         // println("Fired exit segue!")
     }
-
+    
 }
